@@ -6,29 +6,27 @@ Console.OutputEncoding = Encoding.UTF8;
 
 Stack<char> StackResult = new();
 
-var listNumber = new CircularArray<char>(new char[] {
+var listItemNumbers = new CircularArray<char>(new char[] {
     '1','2','3','4','5',
 });
 
-var lisChar = new CircularArrayDecorator<char>(new char[] {
-    'a','b',
-}, listNumber, StackResult);
+var listItemChars = new CircularArrayDecorator<char>(new char[] {
+    'a','b','c','d',
+}, listItemNumbers, StackResult);
 
-var listNumber2 = new CircularArrayDecorator<char>(new char[] {
+var listItemSigns = new CircularArrayDecorator<char>(new char[] {
     '-','+','=',
-}, lisChar, StackResult);
+}, listItemChars, StackResult);
+
+listItemSigns = new CircularArrayDecorator<char>(new char[] {
+    '/','*','?',
+}, listItemSigns, StackResult);
 
 bool isExit = false;
-listNumber.OnEnding += (s, e) => isExit = true;
+listItemNumbers.OnEnding += (s, e) => isExit = true;
 
 
-for (listNumber2.MoveNext(); !isExit; listNumber2.MoveNext())
-{
-    Console.WriteLine(String.Join(" ", StackResult.ToArray()));
-}
-
-isExit = false;
-for (lisChar.MoveNext(); !isExit; lisChar.MoveNext())
+for (listItemSigns.MoveNext(); !isExit; listItemSigns.MoveNext())
 {
     Console.WriteLine(String.Join(" ", StackResult.ToArray()));
 }
